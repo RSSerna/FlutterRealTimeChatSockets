@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterrealtimechatsockets/core/di/injection_container.dart';
 import 'package:flutterrealtimechatsockets/core/router/app_routes.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 
 
@@ -39,6 +39,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       title: 'Material App',
       routerConfig: router,

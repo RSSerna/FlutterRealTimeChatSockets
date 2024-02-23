@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutterrealtimechatsockets/core/constants/router_paths.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/custom_elevated_button_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/custom_input_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/labels_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/logo_widget.dart';
-import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -26,15 +27,15 @@ class LoginScreen extends StatelessWidget {
                 ),
                 const LoginForm(),
                 LabelsWidget(
-                  subtitle: 'Local: No tienes cuenta?',
+                  subtitle: AppLocalizations.of(context)!.dontHaveAccount,
                   onTap: () {
                     context.push(RouterPaths.register);
                   },
-                  title: 'Local:  Crear una ahora!',
+                  title: AppLocalizations.of(context)!.createOneNow,
                 ),
-                const Text(
-                  'Local: Terminos y condiciones de uso',
-                  style: TextStyle(fontWeight: FontWeight.w200),
+                Text(
+                  AppLocalizations.of(context)!.termsAndConditions,
+                  style: const TextStyle(fontWeight: FontWeight.w200),
                 )
               ],
             ),
@@ -58,7 +59,7 @@ class LoginForm extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Column(children: [
         CustomInput(
-          hintText: 'Local: Email',
+          hintText: AppLocalizations.of(context)!.email,
           iconData: Icons.email_outlined,
           textInputType: TextInputType.emailAddress,
           textEditingController: emailCtrl,
@@ -67,7 +68,7 @@ class LoginForm extends StatelessWidget {
           height: 20,
         ),
         CustomInput(
-          hintText: 'Local: Password',
+          hintText: AppLocalizations.of(context)!.password,
           iconData: Icons.lock_outline,
           textInputType: TextInputType.visiblePassword,
           textEditingController: passwordCtrl,
@@ -76,12 +77,10 @@ class LoginForm extends StatelessWidget {
           height: 30,
         ),
         CustomElevatedButton(
-          text: 'Local: Log In',
+          text: AppLocalizations.of(context)!.login,
           onPressed: () {},
         )
       ]),
     );
   }
 }
-
-

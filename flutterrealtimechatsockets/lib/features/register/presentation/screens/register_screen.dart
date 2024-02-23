@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/custom_elevated_button_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/custom_input_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/labels_widget.dart';
@@ -20,20 +21,20 @@ class RegisterScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const LogoWidget(
-                  text: 'Local: Register',
+                LogoWidget(
+                  text: AppLocalizations.of(context)!.register,
                 ),
                 const _LoginForm(),
                 LabelsWidget(
-                  subtitle: 'Local: Ya tienes cuenta?',
+                  subtitle: AppLocalizations.of(context)!.haveAccount,
                   onTap: () {
                     context.pop();
                   },
-                  title: 'Local: Ingresa ahora!',
+                  title: AppLocalizations.of(context)!.loginNow,
                 ),
-                const Text(
-                  'Local: Terminos y condiciones de uso',
-                  style: TextStyle(fontWeight: FontWeight.w200),
+                Text(
+                  AppLocalizations.of(context)!.termsAndConditions,
+                  style: const TextStyle(fontWeight: FontWeight.w200),
                 )
               ],
             ),
@@ -57,7 +58,7 @@ class _LoginForm extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Column(children: [
         CustomInput(
-          hintText: 'Local: Email',
+          hintText: AppLocalizations.of(context)!.email,
           iconData: Icons.email_outlined,
           textInputType: TextInputType.emailAddress,
           textEditingController: emailCtrl,
@@ -66,7 +67,7 @@ class _LoginForm extends StatelessWidget {
           height: 20,
         ),
         CustomInput(
-          hintText: 'Local: Password',
+          hintText: AppLocalizations.of(context)!.password,
           iconData: Icons.lock_outline,
           textInputType: TextInputType.visiblePassword,
           textEditingController: passwordCtrl,
@@ -75,12 +76,10 @@ class _LoginForm extends StatelessWidget {
           height: 30,
         ),
         CustomElevatedButton(
-          text: 'Local: Log In',
+          text: AppLocalizations.of(context)!.register,
           onPressed: () {},
         )
       ]),
     );
   }
 }
-
-

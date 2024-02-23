@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutterrealtimechatsockets/features/home/domain/entities/user.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   final usuarios = [
     User(online: true, email: 'test1@test.com', name: "nombre1", uid: "1"),
     User(online: false, email: 'test2@test.com', name: "nombre2", uid: "2"),
@@ -34,23 +36,69 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
-      body: ListView.separated(
-          physics: const BouncingScrollPhysics(),
-          itemBuilder: (_, i) => ListTile(
-                title: Text(usuarios[i].name),
-                leading: CircleAvatar(
-                  child: Text(usuarios[i].name.substring(0, 2)),
-                ),
-                trailing: Container(
-                  width: 10,
-                  height: 10,
-                  decoration: BoxDecoration(
-                      color: usuarios[i].online ? Colors.green : Colors.red,
-                      borderRadius: BorderRadius.circular(100)),
-                ),
-              ),
-          separatorBuilder: (_, i) => const Divider(),
-          itemCount: usuarios.length),
+      body: SmartRefresher(
+        controller: _refreshController,
+        enablePullDown: true,
+        onRefresh: _onRefresh,
+        header: const WaterDropHeader(
+          complete: Icon(Icons.check, color: Colors.amber),
+          waterDropColor: Colors.amberAccent,
+          refresh:  Icon(Icons.abc, color: Colors.blue),
+        ),
+        child: _UserListViewWidget(usuarios: usuarios),
+      ),
+    );
+  }
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+}
+
+class _UserListViewWidget extends StatelessWidget {
+  const _UserListViewWidget({
+    super.key,
+    required this.usuarios,
+  });
+
+  final List<User> usuarios;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (_, i) => UserTileWidget(user: usuarios[i]),
+        separatorBuilder: (_, i) => const Divider(),
+        itemCount: usuarios.length);
+  }
+}
+
+class UserTileWidget extends StatelessWidget {
+  const UserTileWidget({
+    super.key,
+    required this.user,
+  });
+
+  final User user;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(user.name),
+      subtitle: Text(user.email),
+      leading: CircleAvatar(
+        child: Text(user.name.substring(0, 2)),
+      ),
+      trailing: Container(
+        width: 10,
+        height: 10,
+        decoration: BoxDecoration(
+            color: user.online ? Colors.green : Colors.red,
+            borderRadius: BorderRadius.circular(100)),
+      ),
     );
   }
 }
