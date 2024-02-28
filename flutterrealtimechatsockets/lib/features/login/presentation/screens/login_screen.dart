@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterrealtimechatsockets/core/services/auth_service.dart';
+import 'package:flutterrealtimechatsockets/features/login/presentation/provider/auth_service.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutterrealtimechatsockets/core/constants/router_paths.dart';

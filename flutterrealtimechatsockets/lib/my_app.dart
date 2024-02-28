@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterrealtimechatsockets/core/di/injection_container.dart';
 import 'package:flutterrealtimechatsockets/core/router/app_routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutterrealtimechatsockets/core/services/auth_service.dart';
+import 'package:flutterrealtimechatsockets/features/login/presentation/provider/auth_service.dart';
 import 'package:provider/provider.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 
