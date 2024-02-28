@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutterrealtimechatsockets/features/home/domain/entities/user.dart';
+
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import 'package:flutterrealtimechatsockets/core/user/domain/entities/user.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-  final usuarios = [
+  final usuarios = const [
     User(online: true, email: 'test1@test.com', name: "nombre1", uid: "1"),
     User(online: false, email: 'test2@test.com', name: "nombre2", uid: "2"),
     User(online: true, email: 'test3@test.com', name: "nombre3", uid: "3"),
@@ -43,7 +45,7 @@ class HomeScreen extends StatelessWidget {
         header: const WaterDropHeader(
           complete: Icon(Icons.check, color: Colors.amber),
           waterDropColor: Colors.amberAccent,
-          refresh:  Icon(Icons.abc, color: Colors.blue),
+          refresh: Icon(Icons.abc, color: Colors.blue),
         ),
         child: _UserListViewWidget(usuarios: usuarios),
       ),

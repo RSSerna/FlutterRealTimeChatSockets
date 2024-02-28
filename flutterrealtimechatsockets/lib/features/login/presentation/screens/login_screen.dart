@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterrealtimechatsockets/core/services/auth_service.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutterrealtimechatsockets/core/constants/router_paths.dart';
@@ -6,6 +7,7 @@ import 'package:flutterrealtimechatsockets/core/widgets/custom_elevated_button_w
 import 'package:flutterrealtimechatsockets/core/widgets/custom_input_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/labels_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/logo_widget.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -46,13 +48,19 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
 
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     final TextEditingController emailCtrl = TextEditingController();
     final TextEditingController passwordCtrl = TextEditingController();
+    final authService = Provider.of<AuthService>(context);
 
     return Container(
       margin: const EdgeInsets.only(top: 40),
@@ -78,7 +86,13 @@ class LoginForm extends StatelessWidget {
         ),
         CustomElevatedButton(
           text: AppLocalizations.of(context)!.login,
-          onPressed: () {},
+          onPressed: authService.authenticating
+              ? null
+              : () {
+                  //Quitar el teclado
+                  FocusScope.of(context).unfocus();
+                  authService.login(emailCtrl.text, passwordCtrl.text);
+                },
         )
       ]),
     );

@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutterrealtimechatsockets/core/di/injection_container.dart';
 import 'package:flutterrealtimechatsockets/core/router/app_routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutterrealtimechatsockets/core/services/auth_service.dart';
+import 'package:provider/provider.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 class AppState extends StatelessWidget {
   final InjectionContainerImpl injectionContainerImpl;
@@ -16,20 +16,12 @@ class AppState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MainApp();
-    // return MultiBlocProvider(
-    //   providers: [
-    //     BlocProvider<SocketServiceBloc>(
-    //       create: (BuildContext context) =>
-    //           injectionContainerImpl.sl<SocketServiceBloc>(),
-    //     ),
-    //     BlocProvider<BandsBloc>(
-    //       create: (BuildContext context) =>
-    //           injectionContainerImpl.sl<BandsBloc>(),
-    //     ),
-    //   ],
-    //   child: const MainApp(),
-    // );
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthService()),
+      ],
+      child: const MainApp(),
+    );
   }
 }
 

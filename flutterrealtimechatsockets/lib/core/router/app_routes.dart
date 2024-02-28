@@ -5,7 +5,7 @@ import 'package:flutterrealtimechatsockets/core/constants/router_paths.dart';
 import 'package:flutterrealtimechatsockets/core/router/routes.dart';
 
 final router = GoRouter(
-  initialLocation: RouterPaths.chat,
+  initialLocation: RouterPaths.login,
   routes: [
     //LogIn
     GoRoute(

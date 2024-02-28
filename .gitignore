@@ -1,1 +1,5 @@
 flutterrealtimechatsocketbackend/node_modules/*
+flutterrealtimechatsocketsBLoC/*
+# FVM Version Cache
+.vscode/settings.json
+flutterrealtimechatsockets/.fvmrc
