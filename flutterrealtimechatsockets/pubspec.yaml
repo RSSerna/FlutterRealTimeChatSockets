@@ -48,11 +48,11 @@ dev_dependencies:
     sdk: flutter
 
 # The following section is necessary for generate the Flutter l10n.dart file
-# flutter_intl:
-#   enabled: true
-#   class_name: L10n
-#   arb_dir: lib/core/l10n
-#   output_dir: lib/core/l10n/generated     
+flutter_intl:
+  enabled: true
+  class_name: L10n
+  arb_dir: lib/core/l10n
+  output_dir: lib/core/l10n/generated     
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

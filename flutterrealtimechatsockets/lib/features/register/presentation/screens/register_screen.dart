@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutterrealtimechatsockets/core/l10n/generated/l10n.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/custom_elevated_button_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/custom_input_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/labels_widget.dart';
@@ -22,18 +22,18 @@ class RegisterScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 LogoWidget(
-                  text: AppLocalizations.of(context)!.register,
+                  text: L10n.of(context).register,
                 ),
                 const _LoginForm(),
                 LabelsWidget(
-                  subtitle: AppLocalizations.of(context)!.haveAccount,
+                  subtitle: L10n.of(context).haveAccount,
                   onTap: () {
                     context.pop();
                   },
-                  title: AppLocalizations.of(context)!.loginNow,
+                  title: L10n.of(context).loginNow,
                 ),
                 Text(
-                  AppLocalizations.of(context)!.termsAndConditions,
+                  L10n.of(context).termsAndConditions,
                   style: const TextStyle(fontWeight: FontWeight.w200),
                 )
               ],
@@ -58,7 +58,7 @@ class _LoginForm extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Column(children: [
         CustomInput(
-          hintText: AppLocalizations.of(context)!.email,
+          hintText: L10n.of(context).email,
           iconData: Icons.email_outlined,
           textInputType: TextInputType.emailAddress,
           textEditingController: emailCtrl,
@@ -67,7 +67,7 @@ class _LoginForm extends StatelessWidget {
           height: 20,
         ),
         CustomInput(
-          hintText: AppLocalizations.of(context)!.password,
+          hintText: L10n.of(context).password,
           iconData: Icons.lock_outline,
           textInputType: TextInputType.visiblePassword,
           textEditingController: passwordCtrl,
@@ -76,7 +76,7 @@ class _LoginForm extends StatelessWidget {
           height: 30,
         ),
         CustomElevatedButton(
-          text: AppLocalizations.of(context)!.register,
+          text: L10n.of(context).register,
           onPressed: () {},
         )
       ]),

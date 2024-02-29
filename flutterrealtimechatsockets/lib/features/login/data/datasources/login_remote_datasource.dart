@@ -45,7 +45,6 @@ class LogInRemoteDatasourceImpl extends LogInRemoteDatasource {
         throw ModelException(message: "Can't create LogIn Model");
       }
     }
-
-    throw MyHttpException(errorCode: res.statusCode, message: "Error with Http");
+    throw ServerException(errorCode: res.statusCode);
   }
 }

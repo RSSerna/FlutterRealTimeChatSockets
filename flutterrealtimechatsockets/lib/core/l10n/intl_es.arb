@@ -17,5 +17,6 @@
     "error500": "Oops, algo salió mal en nuestro servidor. Estamos trabajando para solucionarlo",
     "error502": "Error en la puerta de enlace! Se recibió una respuesta no válida desde el servidor",
     "error503": "Servicio no disponible! El no se pudo procesar la solicitud en este momento",
-    "error504": "Tiempo de espera agotado! No pudimos recibir una respuesta oportuna del servidor"
+    "error504": "Tiempo de espera agotado! No pudimos recibir una respuesta oportuna del servidor",
+    "errorDefault": "Lo sentimos. Algo salió mal y no pudimos procesar tu solicitud"
 }

@@ -17,5 +17,6 @@
     "error500": "Oops, something went wrong on our server. We''re working to fix it",
     "error502": "Gateway error! An invalid response was received from the server",
     "error503": "Service unavailable! The server is currently unable to handle the request",
-    "error504": "Timeout error! We couldn''t receive a timely response from the server"
+    "error504": "Timeout error! We couldn''t receive a timely response from the server",
+    "errorDefault": "Oops! Something went wrong and we couldn''t process your request"
 }

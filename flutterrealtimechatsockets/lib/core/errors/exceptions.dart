@@ -9,9 +9,12 @@ class SocketException extends MyExceptions {
 }
 
 class MyHttpException extends MyExceptions {
-  final int errorCode;
+  MyHttpException({required super.message});
+}
 
-  MyHttpException({required super.message, this.errorCode = 500});
+class ServerException extends MyExceptions {
+  final int errorCode;
+  ServerException({super.message, this.errorCode = 500});
 }
 
 class ModelException extends MyExceptions {
