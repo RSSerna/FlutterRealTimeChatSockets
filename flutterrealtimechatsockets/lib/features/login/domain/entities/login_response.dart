@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutterrealtimechatsockets/core/user/domain/entities/user.dart';
 
-class LoginResponse extends Equatable {
+class LogInResponse extends Equatable {
   final bool ok;
   final User userDb;
   final String token;
 
-  const LoginResponse({
+  const LogInResponse({
     required this.ok,
     required this.userDb,
     required this.token,

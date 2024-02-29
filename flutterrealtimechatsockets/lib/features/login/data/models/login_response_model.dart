@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:flutterrealtimechatsockets/core/user/data/model/user_model.dart';
 import 'package:flutterrealtimechatsockets/features/login/domain/entities/login_response.dart';
 
-class LoginResponseModel extends LoginResponse {
+class LogInResponseModel extends LogInResponse {
   final UserModel userModel;
 
-  const LoginResponseModel({
+  const LogInResponseModel({
     required super.ok,
     required this.userModel,
     required super.token,
@@ -20,8 +20,16 @@ class LoginResponseModel extends LoginResponse {
     };
   }
 
-  factory LoginResponseModel.fromMap(Map<String, dynamic> map) {
-    return LoginResponseModel(
+  factory LogInResponseModel.fromMap(Map<String, dynamic> map) {
+    return LogInResponseModel(
+      ok: map['ok'],
+      userModel: UserModel.fromMap(map['userDb']),
+      token: map['token'],
+    );
+  }
+  
+  factory LogInResponseModel.fromMapBulletproof(Map<String, dynamic> map) {
+    return LogInResponseModel(
       ok: map['ok'] ?? false,
       userModel: UserModel.fromMap(map['userDb']),
       token: map['token'] ?? '',
@@ -30,6 +38,6 @@ class LoginResponseModel extends LoginResponse {
 
   String toJson() => json.encode(toMap());
 
-  factory LoginResponseModel.fromJson(String source) =>
-      LoginResponseModel.fromMap(json.decode(source));
+  factory LogInResponseModel.fromJson(String source) =>
+      LogInResponseModel.fromMap(json.decode(source));
 }

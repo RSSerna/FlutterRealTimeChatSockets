@@ -31,7 +31,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   equatable: ^2.0.5
   flutter:
-    sdk: flutter
+    sdk: flutter 
   flutter_localizations:
     sdk: flutter
   fpdart: ^1.1.0
@@ -46,6 +46,13 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+
+# The following section is necessary for generate the Flutter l10n.dart file
+# flutter_intl:
+#   enabled: true
+#   class_name: L10n
+#   arb_dir: lib/core/l10n
+#   output_dir: lib/core/l10n/generated     
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

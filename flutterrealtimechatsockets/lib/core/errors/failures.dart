@@ -11,10 +11,14 @@ class Failure extends Equatable {
 
 class SocketFailure extends Failure {}
 
+class UndocumentedFailure extends Failure {
+  const UndocumentedFailure();
+}
+
 class HttpFailure extends Failure {
-  final String code;
+  final int errorCode;
   final String msg;
 
-  HttpFailure({required this.code, required this.msg})
-      : super(properties: [code, msg]);
+  HttpFailure({required this.errorCode, required this.msg})
+      : super(properties: [errorCode, msg]);
 }
