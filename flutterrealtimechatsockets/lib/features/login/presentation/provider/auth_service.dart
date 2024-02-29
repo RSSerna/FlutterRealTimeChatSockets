@@ -1,11 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutterrealtimechatsockets/core/global/environments.dart';
+import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+
+import 'package:flutterrealtimechatsockets/core/constants/environments.dart';
 import 'package:flutterrealtimechatsockets/core/user/domain/entities/user.dart';
 import 'package:flutterrealtimechatsockets/features/login/data/models/login_response_model.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 
 class AuthService with ChangeNotifier {
   User? user;
