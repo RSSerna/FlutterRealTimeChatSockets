@@ -1,21 +1,36 @@
 import 'dart:convert';
-
-import 'package:flutterrealtimechatsockets/core/http/local_uri_resolver.dart';
 import 'package:http/http.dart';
 
 import 'package:flutterrealtimechatsockets/core/http/http_client_mix.dart';
+import 'package:flutterrealtimechatsockets/core/http/local_uri_resolver.dart';
+import 'package:flutterrealtimechatsockets/core/http/petition_response.dart';
 
 abstract class CustomHttpClient {
-  Future<Response> delete(String path,
-      {Map<String, String>? headers, Object? body, Encoding? encoding});
+  Future<PetitionResponse> delete(
+    String path, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  });
 
-  Future<Response> get(String path, {Map<String, String>? headers});
+  Future<PetitionResponse> get(
+    String path, {
+    Map<String, String>? headers,
+  });
 
-  Future<Response> post(String path,
-      {Map<String, String>? headers, Object? body, Encoding? encoding});
+  Future<PetitionResponse> post(
+    String path, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  });
 
-  Future<Response> put(String path,
-      {Map<String, String>? headers, Object? body, Encoding? encoding});
+  Future<PetitionResponse> put(
+    String path, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  });
 }
 
 class CustomHttpClientImpl extends CustomHttpClient {
@@ -25,31 +40,56 @@ class CustomHttpClientImpl extends CustomHttpClient {
   });
 
   @override
-  Future<Response> delete(String path,
-          {Map<String, String>? headers,
-          Object? body,
-          Encoding? encoding}) async =>
-      await clientMix.delete(LocalUriResolver.resolveLocalHttpUri(path),
-          body: body, encoding: encoding);
+  Future<PetitionResponse> delete(
+    String path, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  }) async {
+    final res = await clientMix.delete(
+        LocalUriResolver.resolveLocalHttpUri(path),
+        body: body,
+        encoding: encoding);
+    return toPetitionResponse(res);
+  }
 
   @override
-  Future<Response> get(String path, {Map<String, String>? headers}) async =>
-      await clientMix.get(LocalUriResolver.resolveLocalHttpUri(path),
-          headers: headers);
+  Future<PetitionResponse> get(
+    String path, {
+    Map<String, String>? headers,
+  }) async {
+    final res = await clientMix.get(LocalUriResolver.resolveLocalHttpUri(path),
+        headers: headers);
+    return toPetitionResponse(res);
+  }
 
   @override
-  Future<Response> post(String path,
-          {Map<String, String>? headers,
-          Object? body,
-          Encoding? encoding}) async =>
-      await clientMix.post(LocalUriResolver.resolveLocalHttpUri(path),
-          headers: headers, body: body, encoding: encoding);
+  Future<PetitionResponse> post(
+    String path, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  }) async {
+    final res = await clientMix.post(LocalUriResolver.resolveLocalHttpUri(path),
+        headers: headers, body: body, encoding: encoding);
+    return toPetitionResponse(res);
+  }
 
   @override
-  Future<Response> put(String path,
-          {Map<String, String>? headers,
-          Object? body,
-          Encoding? encoding}) async =>
-      await clientMix.put(LocalUriResolver.resolveLocalHttpUri(path),
-          headers: headers, body: body, encoding: encoding);
+  Future<PetitionResponse> put(
+    String path, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  }) async {
+    final res = await clientMix.put(LocalUriResolver.resolveLocalHttpUri(path),
+        headers: headers, body: body, encoding: encoding);
+    return toPetitionResponse(res);
+  }
+
+  PetitionResponse toPetitionResponse(Response res) => PetitionResponse(
+      statusCode: res.statusCode,
+      data: res.body,
+      isRedirect: res.isRedirect,
+      headers: res.headers);
 }
