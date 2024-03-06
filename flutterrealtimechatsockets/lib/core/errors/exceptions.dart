@@ -20,3 +20,7 @@ class ServerException extends MyExceptions {
 class ModelException extends MyExceptions {
   ModelException({required super.message});
 }
+
+class SecureStorageException extends MyExceptions {
+  SecureStorageException({super.message});
+}

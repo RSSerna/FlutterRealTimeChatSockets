@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart';
 
+import 'package:flutterrealtimechatsockets/core/errors/exceptions.dart';
 import 'package:flutterrealtimechatsockets/core/http/http_client_mix.dart';
 import 'package:flutterrealtimechatsockets/core/http/local_uri_resolver.dart';
 import 'package:flutterrealtimechatsockets/core/http/petition_response.dart';
@@ -70,6 +71,7 @@ class CustomHttpClientImpl extends CustomHttpClient {
     Object? body,
     Encoding? encoding,
   }) async {
+    print('Path: $path');
     final res = await clientMix.post(LocalUriResolver.resolveLocalHttpUri(path),
         headers: headers, body: body, encoding: encoding);
     return toPetitionResponse(res);
@@ -87,9 +89,17 @@ class CustomHttpClientImpl extends CustomHttpClient {
     return toPetitionResponse(res);
   }
 
-  PetitionResponse toPetitionResponse(Response res) => PetitionResponse(
-      statusCode: res.statusCode,
-      data: res.body,
-      isRedirect: res.isRedirect,
-      headers: res.headers);
+  PetitionResponse toPetitionResponse(Response res) {
+    try {
+      print('ToPetitionResponse');
+      PetitionResponse petitionResponse = PetitionResponse(
+          statusCode: res.statusCode,
+          data: res.body,
+          isRedirect: res.isRedirect,
+          headers: res.headers);
+      return petitionResponse;
+    } catch (e) {
+      throw ModelException(message: 'ToPetitionResponse');
+    }
+  }
 }

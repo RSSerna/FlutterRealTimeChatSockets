@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutterrealtimechatsockets/core/constants/router_paths.dart';
+import 'package:flutterrealtimechatsockets/core/helpers/show_alert.dart';
+import 'package:flutterrealtimechatsockets/features/register/presentation/provider/register_service.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutterrealtimechatsockets/core/l10n/generated/l10n.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/custom_elevated_button_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/custom_input_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/labels_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/logo_widget.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -51,12 +55,24 @@ class _LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController emailCtrl = TextEditingController();
+    final TextEditingController nameCtrl = TextEditingController();
     final TextEditingController passwordCtrl = TextEditingController();
+
+    final registerService = Provider.of<RegisterService>(context);
 
     return Container(
       margin: const EdgeInsets.only(top: 40),
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Column(children: [
+        CustomInput(
+          hintText: 'Local: Name',
+          iconData: Icons.person_outline,
+          textInputType: TextInputType.name,
+          textEditingController: nameCtrl,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
         CustomInput(
           hintText: L10n.of(context).email,
           iconData: Icons.email_outlined,
@@ -77,7 +93,21 @@ class _LoginForm extends StatelessWidget {
         ),
         CustomElevatedButton(
           text: L10n.of(context).register,
-          onPressed: () {},
+          onPressed: registerService.registering
+              ? null
+              : () async {
+                  //Quitar el teclado
+                  FocusScope.of(context).unfocus();
+                  final loginOk = await registerService.register(
+                      nameCtrl.text, emailCtrl.text, passwordCtrl.text);
+
+                  if (loginOk) {
+                    context.go(RouterPaths.home);
+                  } else {
+                    showCustomAlert(context, 'Local: LogIn Invalid',
+                        'Local: Review your credentials');
+                  }
+                },
         )
       ]),
     );

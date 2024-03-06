@@ -17,16 +17,22 @@ class RegisterService with ChangeNotifier {
 
   RegisterService({required this.tryRegister});
 
-  Future login(String name, String email, String password) async {
+  Future<bool> register(String name, String email, String password) async {
     registering = true;
-
     final failureOrRegister = await tryRegister(
         RegisterParams(name: name, email: email, password: password));
+    registering = false;
 
-    failureOrRegister.fold((failure) {}, (logInResponse) {
+    bool ok = true;
+    failureOrRegister.fold((failure) {
+      print('Send False: ${failure.toString()}');
+      ok = false;
+      return false;
+    }, (logInResponse) {
       user = logInResponse.userDb;
     });
 
-    registering = false;
+    print('Send True');
+    return ok;
   }
 }

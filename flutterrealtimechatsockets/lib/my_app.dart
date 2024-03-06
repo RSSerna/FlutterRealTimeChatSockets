@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
+import 'package:flutterrealtimechatsockets/core/di/injection_container.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutterrealtimechatsockets/core/l10n/generated/l10n.dart';
-import 'package:flutterrealtimechatsockets/core/di/injection_container.dart';
 import 'package:flutterrealtimechatsockets/core/router/app_routes.dart';
 import 'package:flutterrealtimechatsockets/features/login/presentation/provider/auth_service.dart';
+import 'package:flutterrealtimechatsockets/features/register/presentation/provider/register_service.dart';
 
 class AppState extends StatelessWidget {
   final InjectionContainerImpl injectionContainerImpl;
@@ -22,6 +23,8 @@ class AppState extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
             create: (_) => injectionContainerImpl.sl<AuthService>()),
+        ChangeNotifierProvider(
+            create: (_) => injectionContainerImpl.sl<RegisterService>()),
       ],
       child: const MainApp(),
     );

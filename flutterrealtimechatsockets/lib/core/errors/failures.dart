@@ -9,7 +9,9 @@ class Failure extends Equatable {
   List<Object?> get props => properties;
 }
 
-class SocketFailure extends Failure {}
+class SocketFailure extends Failure {
+  const SocketFailure();
+}
 
 class MyHttpFailure extends Failure {
   final String msg;
@@ -27,4 +29,11 @@ class ServerFailure extends Failure {
 
 class UndocumentedFailure extends Failure {
   const UndocumentedFailure();
+}
+
+class SecureStorageFailure extends Failure {
+  const SecureStorageFailure();
+}
+class ModelFailure extends Failure {
+  const ModelFailure();
 }

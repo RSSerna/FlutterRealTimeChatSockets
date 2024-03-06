@@ -34,9 +34,9 @@ class UserModel extends User {
       UserModel.fromMap(json.decode(source));
 
   factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
-        uid: json["uid"],
-        name: json["name"],
-        email: json["email"],
-        online: json["online"],
+        uid: json["uid"] ?? "",
+        name: json["name"] ?? "",
+        email: json["email"] ?? "",
+        online: json["online"] ?? false,
       );
 }
