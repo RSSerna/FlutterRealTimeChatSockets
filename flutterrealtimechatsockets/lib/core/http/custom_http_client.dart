@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:flutterrealtimechatsockets/core/errors/exceptions.dart';
 import 'package:http/http.dart';
 
+import 'package:flutterrealtimechatsockets/core/errors/exceptions.dart';
 import 'package:flutterrealtimechatsockets/core/http/http_client_mix.dart';
 import 'package:flutterrealtimechatsockets/core/http/local_uri_resolver.dart';
 import 'package:flutterrealtimechatsockets/core/http/petition_response.dart';
