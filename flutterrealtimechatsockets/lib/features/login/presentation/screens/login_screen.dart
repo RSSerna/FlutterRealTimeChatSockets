@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutterrealtimechatsockets/core/constants/router_paths.dart';
+import 'package:flutterrealtimechatsockets/core/helpers/show_alert.dart';
 import 'package:flutterrealtimechatsockets/core/l10n/generated/l10n.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/custom_elevated_button_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/custom_input_widget.dart';
@@ -26,7 +27,7 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const LogoWidget(
-                  text: 'Messenger',
+                  text: 'Messenger!',
                 ),
                 const LoginForm(),
                 LabelsWidget(
@@ -89,10 +90,18 @@ class _LoginFormState extends State<LoginForm> {
           text: L10n.of(context).login,
           onPressed: authService.authenticating
               ? null
-              : () {
+              : () async {
                   //Quitar el teclado
                   FocusScope.of(context).unfocus();
-                  authService.login(emailCtrl.text, passwordCtrl.text);
+                  final loginOk = await authService.login(
+                      emailCtrl.text, passwordCtrl.text);
+
+                  if (loginOk) {
+                    context.go(RouterPaths.home);
+                  } else {
+                    showCustomAlert(context, 'Local: LogIn Invalid',
+                        'Local: Review your credentials');
+                  }
                 },
         )
       ]),

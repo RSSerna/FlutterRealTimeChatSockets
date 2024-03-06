@@ -16,8 +16,12 @@ Future<Either<Failure, T>> errorHandlerOrResponse<T>(Future<T> function) async {
       errorCode: e.errorCode,
     ));
   } on SocketException {
-    return Left(SocketFailure());
-  } on MyHttpException catch (e){
+    return const Left(SocketFailure());
+  } on SecureStorageException {
+    return const Left(SecureStorageFailure());
+  } on ModelException {
+    return const Left(ModelFailure());
+  } on MyHttpException catch (e) {
     return Left(MyHttpFailure(msg: e.message!));
   } catch (e) {
     return const Left(UndocumentedFailure());

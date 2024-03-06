@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:http/http.dart';
 
@@ -14,79 +13,80 @@ class HttpClientMix implements Client {
 
   @override
   Future<Response> delete(Uri url,
-      {Map<String, String>? headers, Object? body, Encoding? encoding}) {
+      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     try {
-      return client.delete(url,
+      return await client.delete(url,
           headers: headers, body: body, encoding: encoding);
-    } on HttpException catch (e) {
-      throw MyHttpException(message: e.message);
+    } catch (e) {
+      throw MyHttpException(message: e.toString());
     }
   }
 
   @override
-  Future<Response> get(Uri url, {Map<String, String>? headers}) {
+  Future<Response> get(Uri url, {Map<String, String>? headers}) async {
     try {
-      return client.get(url, headers: headers);
-    } on HttpException catch (e) {
-      throw MyHttpException(message: e.message);
+      return await client.get(url, headers: headers);
+    } catch (e) {
+      throw MyHttpException(message: e.toString());
     }
   }
 
   @override
   Future<Response> post(Uri url,
-      {Map<String, String>? headers, Object? body, Encoding? encoding}) {
+      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     try {
-      return client.post(url, headers: headers, body: body, encoding: encoding);
-    } on HttpException catch (e) {
-      throw MyHttpException(message: e.message);
+      print('Post from HttpMix');
+      return await client.post(url, headers: headers, body: body, encoding: encoding);
+    } catch (e) {
+      throw MyHttpException(message: e.toString());
     }
   }
 
   @override
   Future<Response> put(Uri url,
-      {Map<String, String>? headers, Object? body, Encoding? encoding}) {
+      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     try {
-      return client.put(url, headers: headers, body: body, encoding: encoding);
-    } on HttpException catch (e) {
-      throw MyHttpException(message: e.message);
+      return await client.put(url, headers: headers, body: body, encoding: encoding);
+    } catch (e) {
+      throw MyHttpException(message: e.toString());
     }
   }
 
   @override
-  Future<Response> head(Uri url, {Map<String, String>? headers}) {
+  Future<Response> head(Uri url, {Map<String, String>? headers}) async {
     try {
-      return client.head(url, headers: headers);
-    } on HttpException catch (e) {
-      throw MyHttpException(message: e.message);
+      return await client.head(url, headers: headers);
+    } catch (e) {
+      throw MyHttpException(message: e.toString());
     }
   }
 
   @override
   Future<Response> patch(Uri url,
-      {Map<String, String>? headers, Object? body, Encoding? encoding}) {
+      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     try {
-      return client.patch(url,
+      return await client.patch(url,
           headers: headers, body: body, encoding: encoding);
-    } on HttpException catch (e) {
-      throw MyHttpException(message: e.message);
+    } catch (e) {
+      throw MyHttpException(message: e.toString());
     }
   }
 
   @override
-  Future<String> read(Uri url, {Map<String, String>? headers}) {
+  Future<String> read(Uri url, {Map<String, String>? headers}) async {
     try {
-      return client.read(url, headers: headers);
-    } on HttpException catch (e) {
-      throw MyHttpException(message: e.message);
+      return await client.read(url, headers: headers);
+    } catch (e) {
+      throw MyHttpException(message: e.toString());
     }
   }
 
   @override
-  Future<Uint8List> readBytes(Uri url, {Map<String, String>? headers}) {
+  Future<Uint8List> readBytes(Uri url, {Map<String, String>? headers}) async {
     try {
-      return client.readBytes(url, headers: headers);
-    } on HttpException catch (e) {
-      throw MyHttpException(message: e.message);
+      return await client.readBytes(url, headers: headers);
+    } catch (e) {
+      throw MyHttpException(message: e.toString());
     }
   }
 

@@ -22,16 +22,8 @@ class LogInResponseModel extends LogInResponse {
 
   factory LogInResponseModel.fromMap(Map<String, dynamic> map) {
     return LogInResponseModel(
-      ok: map['ok'],
-      userModel: UserModel.fromMap(map['userDb']),
-      token: map['token'],
-    );
-  }
-  
-  factory LogInResponseModel.fromMapBulletproof(Map<String, dynamic> map) {
-    return LogInResponseModel(
       ok: map['ok'] ?? false,
-      userModel: UserModel.fromMap(map['userDb']),
+      userModel: UserModel.fromMap(map['userDB']),
       token: map['token'] ?? '',
     );
   }

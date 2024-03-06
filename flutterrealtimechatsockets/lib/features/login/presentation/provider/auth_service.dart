@@ -18,16 +18,22 @@ class AuthService with ChangeNotifier {
 
   AuthService({required this.tryLogIn});
 
-  Future login(String email, String password) async {
+  Future<bool> login(String email, String password) async {
     authenticating = true;
 
     final failureOrLogIn = await tryLogIn(
         LogInParams(email: email.trim(), password: password.trim()));
 
-    failureOrLogIn.fold((failure) {}, (logInResponse) {
+    authenticating = false;
+    bool ok = true;
+    failureOrLogIn.fold((failure) {
+      print('Send False: ${failure.toString()}');
+      ok = false;
+      return false;
+    }, (logInResponse) {
       user = logInResponse.userDb;
     });
-
-    authenticating = false;
+    print('Send True');
+    return ok;
   }
 }

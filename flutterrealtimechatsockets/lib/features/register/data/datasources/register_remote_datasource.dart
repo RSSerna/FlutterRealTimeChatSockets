@@ -21,25 +21,29 @@ class RegisterRemoteDatasourceImpl extends RegisterRemoteDatasource {
   @override
   Future<RegisterResponseModel> tryRegister(
       {required RegisterParams registerParams}) async {
-    final PetitionResponse res = await client.post(
+    print('Prueba Llego a register');
+    var jsonBody = RegisterParamsModel(
+            email: registerParams.email,
+            password: registerParams.password,
+            name: registerParams.name)
+        .toJson();
+    print(jsonBody);
+    final PetitionResponse response = await client.post(
       API.apiLogIn,
       headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-      body: RegisterParamsModel(
-              email: registerParams.email,
-              password: registerParams.password,
-              name: registerParams.name)
-          .toJson(),
+      body: jsonBody,
     );
 
-    print(res.data);
-    if (res.statusCode == 200) {
+    print(response.data);
+
+    if (response.statusCode == 200) {
       try {
-        final registerResponse = RegisterResponseModel.fromJson(res.data);
+        final registerResponse = RegisterResponseModel.fromJson(response.data);
         return registerResponse;
       } catch (e) {
         throw ModelException(message: "Can't create Register Model");
       }
     }
-    throw ServerException(errorCode: res.statusCode);
+    throw ServerException(errorCode: response.statusCode);
   }
 }
