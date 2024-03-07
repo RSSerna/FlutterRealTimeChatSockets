@@ -16,7 +16,7 @@ import 'package:flutterrealtimechatsockets/features/login/data/datasources/login
 import 'package:flutterrealtimechatsockets/features/login/data/repositories/login_repository_impl.dart';
 import 'package:flutterrealtimechatsockets/features/login/domain/repositories/login_repository.dart';
 import 'package:flutterrealtimechatsockets/features/login/domain/usecases/try_login.dart';
-import 'package:flutterrealtimechatsockets/features/login/presentation/provider/auth_service.dart';
+import 'package:flutterrealtimechatsockets/features/login/presentation/provider/login_service.dart';
 import 'package:flutterrealtimechatsockets/features/register/data/datasources/register_remote_datasource.dart';
 import 'package:flutterrealtimechatsockets/features/register/data/repositories/register_repository_impl.dart';
 import 'package:flutterrealtimechatsockets/features/register/domain/repositories/register_repository.dart';
@@ -34,7 +34,7 @@ class InjectionContainerImpl implements InjectionContainer {
   Future<void> init() async {
     ///Auth Service
     //Provider
-    sl.registerFactory(() => AuthService(tryLogIn: sl()));
+    sl.registerFactory(() => LoginService(tryLogIn: sl()));
 
     //Usecases
     sl.registerLazySingleton(() => TryLogIn(logInRepository: sl()));

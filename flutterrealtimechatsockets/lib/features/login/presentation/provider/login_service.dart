@@ -4,7 +4,7 @@ import 'package:flutterrealtimechatsockets/features/login/domain/entities/login_
 import 'package:flutterrealtimechatsockets/features/login/domain/usecases/try_login.dart';
 import 'package:flutterrealtimechatsockets/core/user/domain/entities/user.dart';
 
-class AuthService with ChangeNotifier {
+class LoginService with ChangeNotifier {
   User? user;
 
   bool _authenticating = false;
@@ -16,7 +16,7 @@ class AuthService with ChangeNotifier {
 
   final TryLogIn tryLogIn;
 
-  AuthService({required this.tryLogIn});
+  LoginService({required this.tryLogIn});
 
   Future<bool> login(String email, String password) async {
     authenticating = true;

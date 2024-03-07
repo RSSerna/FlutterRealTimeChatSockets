@@ -6,7 +6,7 @@ import 'package:flutterrealtimechatsockets/core/di/injection_container.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutterrealtimechatsockets/core/l10n/generated/l10n.dart';
 import 'package:flutterrealtimechatsockets/core/router/app_routes.dart';
-import 'package:flutterrealtimechatsockets/features/login/presentation/provider/auth_service.dart';
+import 'package:flutterrealtimechatsockets/features/login/presentation/provider/login_service.dart';
 import 'package:flutterrealtimechatsockets/features/register/presentation/provider/register_service.dart';
 import 'package:flutterrealtimechatsockets/features/loading/presentation/provider/loading_service.dart';
 
@@ -23,7 +23,7 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-            create: (_) => injectionContainerImpl.sl<AuthService>()),
+            create: (_) => injectionContainerImpl.sl<LoginService>()),
         ChangeNotifierProvider(
             create: (_) => injectionContainerImpl.sl<RegisterService>()),
         ChangeNotifierProvider(
