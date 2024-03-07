@@ -91,13 +91,11 @@ class CustomHttpClientImpl extends CustomHttpClient {
 
   PetitionResponse toPetitionResponse(Response res) {
     try {
-      print('ToPetitionResponse');
-      PetitionResponse petitionResponse = PetitionResponse(
+      return PetitionResponse(
           statusCode: res.statusCode,
           data: res.body,
           isRedirect: res.isRedirect,
           headers: res.headers);
-      return petitionResponse;
     } catch (e) {
       throw ModelException(message: 'ToPetitionResponse');
     }

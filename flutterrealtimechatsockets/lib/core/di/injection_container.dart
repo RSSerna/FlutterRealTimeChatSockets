@@ -1,3 +1,10 @@
+import 'package:flutterrealtimechatsockets/features/loading/data/datasources/loading_local_datasource.dart';
+import 'package:flutterrealtimechatsockets/features/loading/data/datasources/loading_remote_datasource.dart';
+import 'package:flutterrealtimechatsockets/features/loading/data/repositories/loading_repository_impl.dart';
+import 'package:flutterrealtimechatsockets/features/loading/domain/repositories/loading_repository.dart';
+import 'package:flutterrealtimechatsockets/features/loading/domain/usecases/try_get_token.dart';
+import 'package:flutterrealtimechatsockets/features/loading/domain/usecases/try_renew_token..dart';
+import 'package:flutterrealtimechatsockets/features/loading/presentation/provider/loading_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
@@ -42,6 +49,7 @@ class InjectionContainerImpl implements InjectionContainer {
       () => LogInRemoteDatasourceImpl(client: sl(), secureStorage: sl()),
     );
 
+    //--------------------------------------------------------------------------------------
 
     ///Register Service
     //Provider
@@ -59,6 +67,33 @@ class InjectionContainerImpl implements InjectionContainer {
     sl.registerLazySingleton<RegisterRemoteDatasource>(
       () => RegisterRemoteDatasourceImpl(client: sl()),
     );
+
+    //--------------------------------------------------------------------------------------
+
+    ///Loading Service
+    //Provider
+    sl.registerFactory(
+        () => LoadingService(tryGetToken: sl(), tryRenewToken: sl()));
+
+    //Usecases
+    sl.registerLazySingleton(() => TryGetToken(loadingRepository: sl()));
+    sl.registerLazySingleton(() => TryRenewToken(loadingRepository: sl()));
+
+    //Repository
+    sl.registerLazySingleton<LoadingRepository>(
+      () => LoadingRepositoryImpl(
+          loadingLocalDatasource: sl(), loadingRemoteDatasource: sl()),
+    );
+
+    //Data
+    sl.registerLazySingleton<LoadingRemoteDatasource>(
+      () => LoadingRemoteDatasourceImpl(client: sl(), secureStorage: sl()),
+    );
+    sl.registerLazySingleton<LoadingLocalDatasource>(
+      () => LoadingLocalDatasourceImpl(secureStorage: sl()),
+    );
+
+    //----------------------------------------- Core ---------------------------------------------
 
     //Http
     sl.registerLazySingleton(Client.new);

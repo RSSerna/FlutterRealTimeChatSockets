@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutterrealtimechatsockets/core/constants/router_paths.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -22,7 +24,11 @@ class HomeScreen extends StatelessWidget {
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            //TODO: Disconnect from SocketServer
+            context.go(RouterPaths.login);
+            //Delete Token
+          },
           icon: const Icon(
             Icons.exit_to_app,
           ),

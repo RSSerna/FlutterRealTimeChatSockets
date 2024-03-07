@@ -15,7 +15,7 @@ class RegisterRepositoryImpl extends RegisterRepository {
   @override
   Future<Either<Failure, RegisterResponse>> tryRegister(
       RegisterParams registerParams) async {
-    return errorHandlerOrResponse(
+    return await errorHandlerOrResponse(
         registerRemoteDatasource.tryRegister(registerParams: registerParams));
   }
 }

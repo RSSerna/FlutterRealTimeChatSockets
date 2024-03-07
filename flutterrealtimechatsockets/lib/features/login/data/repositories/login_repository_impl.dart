@@ -16,7 +16,7 @@ class LogInRepositoryImpl extends LogInRepository {
   @override
   Future<Either<Failure, LogInResponse>> tryLogIn(
       LogInParams loginParams) async {
-    return errorHandlerOrResponse(
+    return await errorHandlerOrResponse(
         logInRemoteDatasource.tryLogIn(loginParams: loginParams));
   }
 }

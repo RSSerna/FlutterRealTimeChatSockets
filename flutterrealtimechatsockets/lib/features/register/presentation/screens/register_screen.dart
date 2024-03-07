@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutterrealtimechatsockets/core/constants/router_paths.dart';
-import 'package:flutterrealtimechatsockets/core/helpers/show_alert.dart';
-import 'package:flutterrealtimechatsockets/features/register/presentation/provider/register_service.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutterrealtimechatsockets/core/helpers/show_alert.dart';
 import 'package:flutterrealtimechatsockets/core/l10n/generated/l10n.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/custom_elevated_button_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/custom_input_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/labels_widget.dart';
 import 'package:flutterrealtimechatsockets/core/widgets/logo_widget.dart';
-import 'package:provider/provider.dart';
+import 'package:flutterrealtimechatsockets/features/register/presentation/provider/register_service.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -102,9 +102,9 @@ class _LoginForm extends StatelessWidget {
                       nameCtrl.text, emailCtrl.text, passwordCtrl.text);
 
                   if (loginOk) {
-                    context.go(RouterPaths.home);
+                    context.pop();
                   } else {
-                    showCustomAlert(context, 'Local: LogIn Invalid',
+                    showCustomAlert(context, 'Local: Register Invalid',
                         'Local: Review your credentials');
                   }
                 },

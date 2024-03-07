@@ -5,7 +5,7 @@ import 'package:flutterrealtimechatsockets/core/constants/router_paths.dart';
 import 'package:flutterrealtimechatsockets/core/router/routes.dart';
 
 final router = GoRouter(
-  initialLocation: RouterPaths.login,
+  initialLocation: RouterPaths.loading,
   routes: [
     //LogIn
     GoRoute(
@@ -32,7 +32,7 @@ final router = GoRouter(
     ),
     //Loading
     GoRoute(
-      path: RouterPaths.login,
+      path: RouterPaths.loading,
       builder: (BuildContext context, GoRouterState state) =>
           const LoadingScreen(),
     ),
