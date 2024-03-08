@@ -10,26 +10,37 @@ import 'package:flutterrealtimechatsockets/core/errors/failures.dart';
 Future<Either<Failure, T>> errorHandlerOrResponse<T>(Future<T> function) async {
   try {
     return Right(await function);
-  } on ServerException catch (e) {
-    return Left(ServerFailure(
-      msg: _serverErrorMessage(e.errorCode),
-      errorCode: e.errorCode,
-    ));
-  } on SocketException {
-    return const Left(SocketFailure());
-  } on SecureStorageException {
-    return const Left(SecureStorageFailure());
-  } on ModelException {
-    return const Left(ModelFailure());
-  } on MyHttpException catch (e) {
-    return Left(MyHttpFailure(msg: e.message!));
   } catch (e) {
-    return const Left(UndocumentedFailure());
+    return Left(errorHandler(e));
+  }
+
+  // on ServerException catch (e) {
+  //   return Left(ServerFailure(
+  //     msg: _serverErrorMessage(e.errorCode),
+  //     errorCode: e.errorCode,
+  //   ));
+  // } on SocketException {
+  //   return const Left(SocketFailure());
+  // } on SecureStorageException {
+  //   return const Left(SecureStorageFailure());
+  // } on ModelException {
+  //   return const Left(ModelFailure());
+  // } on MyHttpException catch (e) {
+  //   return Left(MyHttpFailure(msg: e.message!));
+  // } catch (e) {
+  //   return const Left(UndocumentedFailure());
+  // }
+}
+
+Failure errorHandler(Object e) {
+  if (e is MyExceptions) {
+    return e.getFailureFromException();
+  } else {
+    return const UndocumentedFailure();
   }
 }
 
-String _serverErrorMessage(int errorCode) {
-  // return 'error';
+String serverErrorMessage(int errorCode) {
   switch (errorCode) {
     case 400:
       return L10n.current.error400;

@@ -1,10 +1,8 @@
-import 'package:flutterrealtimechatsockets/features/loading/data/datasources/loading_remote_datasource.dart';
-import 'package:flutterrealtimechatsockets/features/loading/domain/entities/token_response.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:flutterrealtimechatsockets/core/errors/error_handler.dart';
 import 'package:flutterrealtimechatsockets/core/errors/failures.dart';
 import 'package:flutterrealtimechatsockets/features/loading/data/datasources/loading_local_datasource.dart';
-import 'package:flutterrealtimechatsockets/features/loading/domain/entities/internal_token.dart';
+import 'package:flutterrealtimechatsockets/features/loading/data/datasources/loading_remote_datasource.dart';
 import 'package:flutterrealtimechatsockets/features/loading/domain/repositories/loading_repository.dart';
 
 class LoadingRepositoryImpl extends LoadingRepository {
@@ -16,14 +14,18 @@ class LoadingRepositoryImpl extends LoadingRepository {
       required this.loadingRemoteDatasource});
 
   @override
-  Future<Either<Failure, InternalToken>> tryGetToken() async {
-    return await errorHandlerOrResponse(loadingLocalDatasource.tryGetToken());
-  }
-
-  @override
-  Future<Either<Failure, TokenResponse>> tryRenewToken(
-      InternalToken token) async {
-    return await errorHandlerOrResponse(
-        loadingRemoteDatasource.tryRenewToken(internalToken: token));
+  Future<Either<Failure, void>> tryRenewToken() async {
+    try {
+      var token = await loadingLocalDatasource.tryGetToken();
+      await loadingRemoteDatasource.tryRenewToken(internalToken: token);
+    } catch (e) {
+      try {
+        await loadingLocalDatasource.tryDeleteToken();
+      } catch (e) {
+        throw errorHandler(e);
+      }
+      throw errorHandler(e);
+    }
+    throw UnimplementedError();
   }
 }

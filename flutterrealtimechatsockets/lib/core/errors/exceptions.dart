@@ -1,26 +1,53 @@
-class MyExceptions implements Exception {
-  final String? message;
+import 'package:flutterrealtimechatsockets/core/errors/failures.dart';
 
-  MyExceptions({required this.message});
+abstract class MyExceptions implements Exception {
+  final String? message;
+  const MyExceptions({required this.message});
+  Failure getFailureFromException();
 }
 
 class SocketException extends MyExceptions {
-  SocketException({required super.message});
+  const SocketException({required super.message});
+
+  @override
+  Failure getFailureFromException() {
+    return const SocketFailure();
+  }
 }
 
 class MyHttpException extends MyExceptions {
-  MyHttpException({required super.message});
+  const MyHttpException({required super.message});
+
+  @override
+  Failure getFailureFromException() {
+    return MyHttpFailure(msg: super.message);
+  }
 }
 
 class ServerException extends MyExceptions {
   final int errorCode;
-  ServerException({super.message, this.errorCode = 500});
+  const ServerException({super.message, this.errorCode = 500});
+
+  @override
+  Failure getFailureFromException() {
+    return ServerFailure(errorCode: errorCode, msg: super.message);
+  }
 }
 
 class ModelException extends MyExceptions {
-  ModelException({required super.message});
+  const ModelException({required super.message});
+
+  @override
+  Failure getFailureFromException() {
+    return const ModelFailure();
+  }
 }
 
 class SecureStorageException extends MyExceptions {
-  SecureStorageException({super.message});
+  const SecureStorageException({super.message});
+
+  @override
+  Failure getFailureFromException() {
+    return const SecureStorageFailure();
+  }
 }

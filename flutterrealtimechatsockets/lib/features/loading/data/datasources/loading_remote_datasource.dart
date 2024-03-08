@@ -44,7 +44,7 @@ class LoadingRemoteDatasourceImpl extends LoadingRemoteDatasource {
             key: Constants.securedToken, value: jsonData['token']);
         return tokenResponse;
       } catch (e) {
-        throw ModelException(message: "Can't create Register Model");
+        throw const ModelException(message: "Can't create Register Model");
       }
     }
     throw ServerException(errorCode: response.statusCode);

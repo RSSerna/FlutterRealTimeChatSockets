@@ -4,6 +4,8 @@ import 'package:flutterrealtimechatsockets/features/loading/data/models/internal
 
 abstract class LoadingLocalDatasource {
   Future<InternalTokenModel> tryGetToken();
+  Future<void> tryDeleteToken();
+  Future<void> trySaveToken(InternalTokenModel internalTokenModel);
 }
 
 class LoadingLocalDatasourceImpl extends LoadingLocalDatasource {
@@ -15,5 +17,15 @@ class LoadingLocalDatasourceImpl extends LoadingLocalDatasource {
   Future<InternalTokenModel> tryGetToken() async {
     String token = await secureStorage.read(key: Constants.securedToken);
     return InternalTokenModel(token: token);
+  }
+  
+  @override
+  Future<void> tryDeleteToken() async {
+    return await secureStorage.delete(key: Constants.securedToken);
+  }
+  
+  @override
+  Future<void> trySaveToken(InternalTokenModel internalTokenModel) async {
+    return await secureStorage.write(key: Constants.securedToken, value: internalTokenModel.token);
   }
 }

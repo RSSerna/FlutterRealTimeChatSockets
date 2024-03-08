@@ -1,17 +1,16 @@
+import 'package:http/http.dart';
+import 'package:get_it/get_it.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import 'package:flutterrealtimechatsockets/core/http/custom_http_client.dart';
+import 'package:flutterrealtimechatsockets/core/http/http_client_mix.dart';
+import 'package:flutterrealtimechatsockets/core/secure_storage/secure_storage.dart';
 import 'package:flutterrealtimechatsockets/features/loading/data/datasources/loading_local_datasource.dart';
 import 'package:flutterrealtimechatsockets/features/loading/data/datasources/loading_remote_datasource.dart';
 import 'package:flutterrealtimechatsockets/features/loading/data/repositories/loading_repository_impl.dart';
 import 'package:flutterrealtimechatsockets/features/loading/domain/repositories/loading_repository.dart';
-import 'package:flutterrealtimechatsockets/features/loading/domain/usecases/try_get_token.dart';
-import 'package:flutterrealtimechatsockets/features/loading/domain/usecases/try_renew_token..dart';
+import 'package:flutterrealtimechatsockets/features/loading/domain/usecases/try_renew_token.dart';
 import 'package:flutterrealtimechatsockets/features/loading/presentation/provider/loading_service.dart';
-import 'package:get_it/get_it.dart';
-import 'package:http/http.dart';
-
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutterrealtimechatsockets/core/http/custom_http_client.dart';
-import 'package:flutterrealtimechatsockets/core/http/http_client_mix.dart';
-import 'package:flutterrealtimechatsockets/core/secure_storage/secure_storage.dart';
 import 'package:flutterrealtimechatsockets/features/login/data/datasources/login_remote_datasource.dart';
 import 'package:flutterrealtimechatsockets/features/login/data/repositories/login_repository_impl.dart';
 import 'package:flutterrealtimechatsockets/features/login/domain/repositories/login_repository.dart';
@@ -73,10 +72,9 @@ class InjectionContainerImpl implements InjectionContainer {
     ///Loading Service
     //Provider
     sl.registerFactory(
-        () => LoadingService(tryGetToken: sl(), tryRenewToken: sl()));
+        () => LoadingService( tryRenewToken: sl()));
 
     //Usecases
-    sl.registerLazySingleton(() => TryGetToken(loadingRepository: sl()));
     sl.registerLazySingleton(() => TryRenewToken(loadingRepository: sl()));
 
     //Repository
