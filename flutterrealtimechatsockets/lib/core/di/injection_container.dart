@@ -38,6 +38,21 @@ class InjectionContainerImpl implements InjectionContainer {
 
   @override
   Future<void> init() async {
+    //----------------------------------------- Core ---------------------------------------------
+    //Http
+    sl.registerLazySingleton(Client.new);
+    sl.registerLazySingleton(() => HttpClientMix(client: sl()));
+    sl.registerLazySingleton<CustomHttpClient>(
+      () => CustomHttpClientImpl(clientMix: sl()),
+    );
+
+    //Secure Storage
+    sl.registerLazySingleton(() => const FlutterSecureStorage());
+    sl.registerLazySingleton<SecureStorage>(() => SecureStorageImpl(sl()));
+
+    //Functional Socket
+    sl.registerSingleton<FunctionalSocket>(FunctionalSocketIOClientImpl(secureStorage: sl()));
+
     ///Login Service
     //Provider
     sl.registerFactory(
@@ -117,20 +132,5 @@ class InjectionContainerImpl implements InjectionContainer {
       () => LoadingLocalDatasourceImpl(secureStorage: sl()),
     );
 
-    //----------------------------------------- Core ---------------------------------------------
-
-    //Functional Socket
-    sl.registerSingleton<FunctionalSocket>(FunctionalSocketIOClientImpl());
-
-    //Http
-    sl.registerLazySingleton(Client.new);
-    sl.registerLazySingleton(() => HttpClientMix(client: sl()));
-    sl.registerLazySingleton<CustomHttpClient>(
-      () => CustomHttpClientImpl(clientMix: sl()),
-    );
-
-    //Secure Storage
-    sl.registerLazySingleton(() => const FlutterSecureStorage());
-    sl.registerLazySingleton<SecureStorage>(() => SecureStorageImpl(sl()));
   }
 }

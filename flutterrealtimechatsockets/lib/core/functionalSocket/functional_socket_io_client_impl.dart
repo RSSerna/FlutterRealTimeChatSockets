@@ -1,26 +1,34 @@
-import 'package:flutterrealtimechatsockets/core/constants/environments.dart';
 import 'package:socket_io_client/socket_io_client.dart';
-
+import 'package:flutterrealtimechatsockets/core/constants/constants.dart';
+import 'package:flutterrealtimechatsockets/core/constants/environments.dart';
 import 'package:flutterrealtimechatsockets/core/errors/exceptions.dart';
 import 'package:flutterrealtimechatsockets/core/functionalSocket/functional_socket.dart';
+import 'package:flutterrealtimechatsockets/core/secure_storage/secure_storage.dart';
 
 class FunctionalSocketIOClientImpl extends FunctionalSocket {
-  static final FunctionalSocketIOClientImpl _instance =
-      FunctionalSocketIOClientImpl._internal();
+  static FunctionalSocketIOClientImpl? _instance;
 
-  FunctionalSocketIOClientImpl._internal() {
-    initConfing();
+  FunctionalSocketIOClientImpl._internal(SecureStorage? secureStorage) {
     print('<FunctionalSocketIOClientImpls> creation');
+    initConfing();
+    if (secureStorage != null) {
+      secureStorageImpl = secureStorage;
+    }
   }
 
-  factory FunctionalSocketIOClientImpl() => _instance;
+  factory FunctionalSocketIOClientImpl({SecureStorage? secureStorage}) {
+    _instance ??= FunctionalSocketIOClientImpl._internal(secureStorage);
+    return _instance!;
+  }
 
   late Socket _service;
+  late SecureStorage secureStorageImpl;
+
   @override
   void initConfing() {
     _service = io(Environments.socketUrl, {
       'transports': ['websocket'],
-      'autoConnect': false,
+      'autoConnect': true,
       'forceNew': true
     });
 
@@ -37,16 +45,13 @@ class FunctionalSocketIOClientImpl extends FunctionalSocket {
           data: data));
       print('disconected');
     });
-
-    _service.on('active-bands', (data) {
-      eventSink.add(FunctionalSocketEvent(
-          functionalSocketEventEnum: FunctionalSocketEventEnum.activeBands,
-          data: data));
-    });
   }
 
   @override
-  void connect() {
+  void connect() async {
+    _service.acks.addAll({ 'extraHeaders':
+        {'x-token': await secureStorageImpl.read(key: Constants.securedToken)}});
+    print(_service.acks);
     _service.connect();
   }
 
