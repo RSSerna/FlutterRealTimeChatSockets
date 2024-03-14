@@ -71,7 +71,6 @@ class CustomHttpClientImpl extends CustomHttpClient {
     Object? body,
     Encoding? encoding,
   }) async {
-    print('Path: $path');
     final res = await clientMix.post(LocalUriResolver.resolveLocalHttpUri(path),
         headers: headers, body: body, encoding: encoding);
     return toPetitionResponse(res);
@@ -97,7 +96,7 @@ class CustomHttpClientImpl extends CustomHttpClient {
           isRedirect: res.isRedirect,
           headers: res.headers);
     } catch (e) {
-      throw ModelException(message: 'ToPetitionResponse');
+      throw const ModelException(message: 'ToPetitionResponse');
     }
   }
 }

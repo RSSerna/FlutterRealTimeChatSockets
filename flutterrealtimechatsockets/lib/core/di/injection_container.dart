@@ -1,3 +1,10 @@
+import 'package:flutterrealtimechatsockets/core/functionalSocket/functional_socket.dart';
+import 'package:flutterrealtimechatsockets/core/functionalSocket/functional_socket_io_client_impl.dart';
+import 'package:flutterrealtimechatsockets/features/home/data/datasources/home_local_datasource.dart';
+import 'package:flutterrealtimechatsockets/features/home/data/repositories/home_repository_impl.dart';
+import 'package:flutterrealtimechatsockets/features/home/domain/repositories/home_repository.dart';
+import 'package:flutterrealtimechatsockets/features/home/domain/usecases/try_logout.dart';
+import 'package:flutterrealtimechatsockets/features/home/presentation/provider/home_service.dart';
 import 'package:http/http.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -31,9 +38,10 @@ class InjectionContainerImpl implements InjectionContainer {
 
   @override
   Future<void> init() async {
-    ///Auth Service
+    ///Login Service
     //Provider
-    sl.registerFactory(() => LoginService(tryLogIn: sl()));
+    sl.registerFactory(
+        () => LoginService(tryLogIn: sl(), functionalSocket: sl()));
 
     //Usecases
     sl.registerLazySingleton(() => TryLogIn(logInRepository: sl()));
@@ -46,6 +54,25 @@ class InjectionContainerImpl implements InjectionContainer {
     //Data
     sl.registerLazySingleton<LogInRemoteDatasource>(
       () => LogInRemoteDatasourceImpl(client: sl(), secureStorage: sl()),
+    );
+
+    //--------------------------------------------------------------------------------------
+    ///Home Service
+    //Provider
+    sl.registerFactory(
+        () => HomeService(tryLogOut: sl(), functionalSocket: sl()));
+
+    //Usecases
+    sl.registerLazySingleton(() => TryLogOut(homeRepository: sl()));
+
+    //Repository
+    sl.registerLazySingleton<HomeRepository>(
+      () => HomeRepositoryImpl(homeLocalDatasource: sl()),
+    );
+
+    //Data
+    sl.registerLazySingleton<HomeLocalDatasource>(
+      () => HomeLocalDatasourceImpl(secureStorage: sl()),
     );
 
     //--------------------------------------------------------------------------------------
@@ -71,8 +98,7 @@ class InjectionContainerImpl implements InjectionContainer {
 
     ///Loading Service
     //Provider
-    sl.registerFactory(
-        () => LoadingService( tryRenewToken: sl()));
+    sl.registerFactory(() => LoadingService(tryRenewToken: sl(), functionalSocket: sl()));
 
     //Usecases
     sl.registerLazySingleton(() => TryRenewToken(loadingRepository: sl()));
@@ -92,6 +118,9 @@ class InjectionContainerImpl implements InjectionContainer {
     );
 
     //----------------------------------------- Core ---------------------------------------------
+
+    //Functional Socket
+    sl.registerSingleton<FunctionalSocket>(FunctionalSocketIOClientImpl());
 
     //Http
     sl.registerLazySingleton(Client.new);

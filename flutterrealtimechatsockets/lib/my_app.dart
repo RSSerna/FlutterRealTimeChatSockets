@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutterrealtimechatsockets/features/home/presentation/provider/home_service.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutterrealtimechatsockets/core/di/injection_container.dart';
@@ -28,6 +29,8 @@ class AppState extends StatelessWidget {
             create: (_) => injectionContainerImpl.sl<RegisterService>()),
         ChangeNotifierProvider(
             create: (_) => injectionContainerImpl.sl<LoadingService>()),
+        ChangeNotifierProvider(
+            create: (_) => injectionContainerImpl.sl<HomeService>()),
       ],
       child: const MainApp(),
     );

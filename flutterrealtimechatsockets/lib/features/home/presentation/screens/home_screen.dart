@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutterrealtimechatsockets/core/constants/router_paths.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
+import 'package:flutterrealtimechatsockets/core/constants/router_paths.dart';
+import 'package:flutterrealtimechatsockets/core/helpers/show_alert.dart';
 import 'package:flutterrealtimechatsockets/core/user/domain/entities/user.dart';
+import 'package:flutterrealtimechatsockets/features/home/presentation/provider/home_service.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -18,16 +19,20 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final HomeService homeService = Provider.of<HomeService>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mi Nombre'),
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
-          onPressed: () {
-            //TODO: Disconnect from SocketServer
+          onPressed: () async {
+            final logOutOk = await homeService.logout();
+            if (!logOutOk) {
+              showCustomAlert(context, 'Local: Error with LogOut',
+                  'Local: Some Error has happened');
+            }
             context.go(RouterPaths.login);
-            //Delete Token
           },
           icon: const Icon(
             Icons.exit_to_app,
@@ -36,11 +41,16 @@ class HomeScreen extends StatelessWidget {
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 10),
-            // child: const Icon(Icons.check_circle, color: Colors.green,),
-            child: const Icon(
-              Icons.offline_bolt,
-              color: Colors.red,
-            ),
+            // child:
+            child: homeService.isOnline
+                ? const Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                  )
+                : const Icon(
+                    Icons.offline_bolt,
+                    color: Colors.red,
+                  ),
           )
         ],
       ),

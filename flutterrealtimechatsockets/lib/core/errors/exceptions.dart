@@ -7,7 +7,7 @@ abstract class MyExceptions implements Exception {
 }
 
 class SocketException extends MyExceptions {
-  const SocketException({required super.message});
+  const SocketException({super.message});
 
   @override
   Failure getFailureFromException() {

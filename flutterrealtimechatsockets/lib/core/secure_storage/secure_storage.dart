@@ -58,7 +58,7 @@ class SecureStorageImpl implements SecureStorage {
         wOptions: wOptions,
       );
     } catch (e) {
-      throw SecureStorageException();
+      throw const SecureStorageException();
     }
   }
 
@@ -83,7 +83,7 @@ class SecureStorageImpl implements SecureStorage {
     if (value != null) {
       return value;
     } else {
-      throw SecureStorageException();
+      throw const SecureStorageException();
     }
   }
 
@@ -107,7 +107,7 @@ class SecureStorageImpl implements SecureStorage {
         wOptions: wOptions,
       );
     } catch (e) {
-      throw SecureStorageException();
+      throw const SecureStorageException();
     }
   }
 }

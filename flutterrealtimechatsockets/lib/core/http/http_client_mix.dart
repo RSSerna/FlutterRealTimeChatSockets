@@ -35,7 +35,6 @@ class HttpClientMix implements Client {
   Future<Response> post(Uri url,
       {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     try {
-      print('Post from HttpMix');
       return await client.post(url, headers: headers, body: body, encoding: encoding);
     } catch (e) {
       throw MyHttpException(message: e.toString());

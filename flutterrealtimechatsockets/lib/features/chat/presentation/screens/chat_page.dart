@@ -30,7 +30,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
             CircleAvatar(
               backgroundColor: Colors.blue[100],
               maxRadius: 14,
-              child: Text('Te', style: TextStyle(fontSize: 12)),
+              child: const Text('Te', style: TextStyle(fontSize: 12)),
             ),
             const SizedBox(height: 3),
             const Text('Melissa Flores',
@@ -49,10 +49,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
             itemBuilder: (_, i) => _messages[i],
             reverse: true,
           )),
-
           const Divider(height: 1),
-
-          // TODO: Caja de texto
           Container(
             color: Colors.white,
             child: _inputChat(),
@@ -81,7 +78,8 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                 }
               });
             },
-            decoration: const InputDecoration.collapsed(hintText: 'Enviar mensaje'),
+            decoration:
+                const InputDecoration.collapsed(hintText: 'Enviar mensaje'),
             focusNode: _focusNode,
           )),
 
@@ -118,7 +116,6 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   _handleSubmit(String texto) {
     if (texto.isEmpty) return;
 
-    print(texto);
     _textController.clear();
     _focusNode.requestFocus();
 

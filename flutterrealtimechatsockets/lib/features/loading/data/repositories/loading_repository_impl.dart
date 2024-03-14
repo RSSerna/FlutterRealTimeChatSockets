@@ -18,14 +18,14 @@ class LoadingRepositoryImpl extends LoadingRepository {
     try {
       var token = await loadingLocalDatasource.tryGetToken();
       await loadingRemoteDatasource.tryRenewToken(internalToken: token);
+      return const Right(null);
     } catch (e) {
       try {
         await loadingLocalDatasource.tryDeleteToken();
       } catch (e) {
-        throw errorHandler(e);
+        return Left(errorHandler(e));
       }
-      throw errorHandler(e);
+      return Left(errorHandler(e));
     }
-    throw UnimplementedError();
   }
 }

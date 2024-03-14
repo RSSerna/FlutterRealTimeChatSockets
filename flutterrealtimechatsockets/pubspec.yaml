@@ -23,7 +23,7 @@ environment:
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively, 
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
@@ -32,7 +32,7 @@ dependencies:
   dio: ^5.4.1
   equatable: ^2.0.5
   flutter:
-    sdk: flutter
+    sdk: flutter 
   flutter_localizations:
     sdk: flutter
   flutter_secure_storage: ^9.0.0
@@ -43,9 +43,10 @@ dependencies:
   intl: ^0.18.1
   provider: ^6.1.1
   pull_to_refresh: ^2.0.0
+  socket_io_client: ^2.0.3+1 
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.0 
   flutter_test:
     sdk: flutter
 
