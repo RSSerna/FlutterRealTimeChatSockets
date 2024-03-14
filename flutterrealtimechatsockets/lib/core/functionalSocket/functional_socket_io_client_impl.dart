@@ -10,7 +10,6 @@ class FunctionalSocketIOClientImpl extends FunctionalSocket {
 
   FunctionalSocketIOClientImpl._internal(SecureStorage? secureStorage) {
     print('<FunctionalSocketIOClientImpls> creation');
-    initConfing();
     if (secureStorage != null) {
       secureStorageImpl = secureStorage;
     }
@@ -26,12 +25,11 @@ class FunctionalSocketIOClientImpl extends FunctionalSocket {
 
   @override
   void initConfing() {
-    _service = io(Environments.socketUrl, {
-      'transports': ['websocket'],
-      'autoConnect': true,
-      'forceNew': true
-    });
-
+    // _service = io(Environments.socketUrl, {
+    //   'transports': ['websocket'],
+    //   'autoConnect': false,
+    //   'forceNew': true,
+    // });
     _service.onConnect((data) {
       eventSink.add(FunctionalSocketEvent(
           functionalSocketEventEnum: FunctionalSocketEventEnum.onConnected,
@@ -49,10 +47,21 @@ class FunctionalSocketIOClientImpl extends FunctionalSocket {
 
   @override
   void connect() async {
-    _service.acks.addAll({ 'extraHeaders':
-        {'x-token': await secureStorageImpl.read(key: Constants.securedToken)}});
-    print(_service.acks);
-    _service.connect();
+    // TODO: Ver como ponerle headers
+    // _service.acks.addAll({ 'extraHeaders':
+    //     {'x-token': await secureStorageImpl.read(key: Constants.securedToken)}});
+    // print(_service.acks);
+    // _service.connect();
+    _service = io(Environments.socketUrl, {
+      'transports': ['websocket'],
+      'autoConnect': true,
+      'forceNew': true,
+      'extraHeaders': {
+        'x-token': await secureStorageImpl.read(key: Constants.securedToken)
+      }
+    });
+
+    initConfing();
   }
 
   @override
