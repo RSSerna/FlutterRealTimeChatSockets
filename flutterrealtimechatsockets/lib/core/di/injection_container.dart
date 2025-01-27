@@ -1,8 +1,10 @@
 import 'package:flutterrealtimechatsockets/core/functionalSocket/functional_socket.dart';
 import 'package:flutterrealtimechatsockets/core/functionalSocket/functional_socket_io_client_impl.dart';
 import 'package:flutterrealtimechatsockets/features/home/data/datasources/home_local_datasource.dart';
+import 'package:flutterrealtimechatsockets/features/home/data/datasources/home_remote_datasource.dart';
 import 'package:flutterrealtimechatsockets/features/home/data/repositories/home_repository_impl.dart';
 import 'package:flutterrealtimechatsockets/features/home/domain/repositories/home_repository.dart';
+import 'package:flutterrealtimechatsockets/features/home/domain/usecases/get_users.dart';
 import 'package:flutterrealtimechatsockets/features/home/domain/usecases/try_logout.dart';
 import 'package:flutterrealtimechatsockets/features/home/presentation/provider/home_service.dart';
 import 'package:http/http.dart';
@@ -51,7 +53,8 @@ class InjectionContainerImpl implements InjectionContainer {
     sl.registerLazySingleton<SecureStorage>(() => SecureStorageImpl(sl()));
 
     //Functional Socket
-    sl.registerSingleton<FunctionalSocket>(FunctionalSocketIOClientImpl(secureStorage: sl()));
+    sl.registerSingleton<FunctionalSocket>(
+        FunctionalSocketIOClientImpl(secureStorage: sl()));
 
     ///Login Service
     //Provider
@@ -79,15 +82,20 @@ class InjectionContainerImpl implements InjectionContainer {
 
     //Usecases
     sl.registerLazySingleton(() => TryLogOut(homeRepository: sl()));
+    sl.registerLazySingleton(() => GetUsers(homeRepository: sl()));
 
     //Repository
     sl.registerLazySingleton<HomeRepository>(
-      () => HomeRepositoryImpl(homeLocalDatasource: sl()),
+      () => HomeRepositoryImpl(
+          homeLocalDatasource: sl(), homeRemoteDatasource: sl()),
     );
 
     //Data
     sl.registerLazySingleton<HomeLocalDatasource>(
       () => HomeLocalDatasourceImpl(secureStorage: sl()),
+    );
+    sl.registerLazySingleton<HomeRemoteDatasource>(
+      () => HomeRemoteDatasourceImpl(client: sl()),
     );
 
     //--------------------------------------------------------------------------------------
@@ -113,7 +121,8 @@ class InjectionContainerImpl implements InjectionContainer {
 
     ///Loading Service
     //Provider
-    sl.registerFactory(() => LoadingService(tryRenewToken: sl(), functionalSocket: sl()));
+    sl.registerFactory(
+        () => LoadingService(tryRenewToken: sl(), functionalSocket: sl()));
 
     //Usecases
     sl.registerLazySingleton(() => TryRenewToken(loadingRepository: sl()));
@@ -131,6 +140,5 @@ class InjectionContainerImpl implements InjectionContainer {
     sl.registerLazySingleton<LoadingLocalDatasource>(
       () => LoadingLocalDatasourceImpl(secureStorage: sl()),
     );
-
   }
 }

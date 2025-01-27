@@ -14,6 +14,7 @@ class PetitionResponse {
     required this.headers,
   });
 }
+
 class ResponseHttp {
   // String body = '';
   // int statusCode = 1;
